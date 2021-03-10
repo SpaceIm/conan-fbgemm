@@ -1,0 +1,4 @@
+sources:
+  "cci.20210309":
+    url: "https://github.com/pytorch/FBGEMM/archive/06f5f6285b662480560e72883364a783b36337b0.zip"
+    sha256: "0bc002e01a96d39441b11b1c6ae46ea777265eda5ed52c1bd127aec03d51e52f"
