@@ -134,3 +134,5 @@ class FbgemmConan(ConanFile):
         self.cpp_info.build_modules["cmake_find_package"] = [self._module_file_rel_path]
         self.cpp_info.build_modules["cmake_find_package_multi"] = [self._module_file_rel_path]
         self.cpp_info.libs = ["fbgemm"]
+        if not self.options.shared:
+            self.cpp_info.defines = ["FBGEMM_STATIC"]
