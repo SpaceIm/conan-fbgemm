@@ -48,7 +48,7 @@ class FbgemmConan(ConanFile):
         compiler_version = tools.Version(self.settings.compiler.version)
         if (compiler == "Visual Studio" and compiler_version < "15") or \
            (compiler == "gcc" and compiler_version < "5"):
-            raise ConanInvalidConfiguration("fbgemm doesn't support {} {}}".format(str(compiler), compiler.version))
+            raise ConanInvalidConfiguration("fbgemm doesn't support {} {}".format(str(compiler), compiler.version))
 
     def requirements(self):
         self.requires("asmjit/cci.20210306")
