@@ -1,4 +1,5 @@
 from conans import ConanFile, CMake, tools
+from conans.errors import ConanInvalidConfiguration
 import glob
 import os
 import textwrap
@@ -43,6 +44,11 @@ class FbgemmConan(ConanFile):
             del self.options.fPIC
         if self.settings.compiler.get_safe("cppstd"):
             tools.check_min_cppstd(self, 14)
+        compiler = self.settings.compiler
+        compiler_version = tools.Version(self.settings.compiler.version)
+        if (compiler == "Visual Studio" and compiler_version < "15") or \
+           (compiler == "gcc" and compiler_version < "5"):
+            raise ConanInvalidConfiguration("fbgemm doesn't support {} {}".format(str(compiler), compiler.version))
 
     def requirements(self):
         self.requires("asmjit/cci.20210306")
@@ -128,3 +134,5 @@ class FbgemmConan(ConanFile):
         self.cpp_info.build_modules["cmake_find_package"] = [self._module_file_rel_path]
         self.cpp_info.build_modules["cmake_find_package_multi"] = [self._module_file_rel_path]
         self.cpp_info.libs = ["fbgemm"]
+        if not self.options.shared:
+            self.cpp_info.defines = ["FBGEMM_STATIC"]
